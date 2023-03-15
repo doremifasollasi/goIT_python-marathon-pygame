@@ -7,8 +7,7 @@ screen = width, height = 800, 600
 
 BLACK = 0, 0, 0
 WHITE = 255, 255, 255
-RED = 255, 0, 0
-GREEN = 0, 255, 0
+
 
 main_surface = pygame.display.set_mode(screen)
 
@@ -25,13 +24,7 @@ while is_working:
             is_working = False  # pygame.quit()
     ball_rect = ball_rect.move(ball_speed)
     
-    if ball_rect.bottom >= height or ball_rect.top <= 0: # відбивання м'яча від нижньої та верхньої межі
-        ball.fill((RED))
-        ball_speed[1] = -ball_speed[1]
-
-    if ball_rect.right >= width or ball_rect.left <= 0: # відбивання м'яча від лівого та правого краю
-        ball.fill((GREEN))
-        ball_speed[0] = -ball_speed[0]
+    
     
     main_surface.fill(BLACK)
 
