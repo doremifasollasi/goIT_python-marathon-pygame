@@ -19,10 +19,10 @@ font = pygame.font.SysFont('Verdana', 20)
 
 main_surface = pygame.display.set_mode(screen)
 
-ball = pygame.Surface((20, 20))
-ball.fill(WHITE)
-ball_rect = ball.get_rect() #координати положення ball - початкове(0,0)
-ball_speed = 5
+player = pygame.Surface((20, 20))
+player.fill(WHITE)
+player_rect = player.get_rect() #координати положення player - початкове(0,0)
+player_speed = 5
 
 def create_enemy():
     enemy = pygame.Surface((20, 20))
@@ -64,21 +64,21 @@ while is_working:
         
         if event.type == CREATE_BONUS:
             bonuses.append(create_bonus())
-    # ball_rect = ball_rect.move(ball_speed) перенесли в команду K_DOWN
+    # player_rect = player_rect.move(player_speed) перенесли в команду K_DOWN
     
-    # if ball_rect.bottom >= height or ball_rect.top <= 0: #відбивання м'яча від верхньої та нижньої сторони ігрового поля зі зміною кольору
-    #     ball.fill((RED))
-    #     ball_speed[1] = -ball_speed[1]
+    # if player_rect.bottom >= height or player_rect.top <= 0: #відбивання м'яча від верхньої та нижньої сторони ігрового поля зі зміною кольору
+    #     player.fill((RED))
+    #     player_speed[1] = -player_speed[1]
     
-    # if ball_rect.right >= width or ball_rect.left <= 0: #відбивання м'яча від правої та лівої сторони ігрового поля зі зміною кольору
-    #     ball.fill((GREEN))
-    #     ball_speed[1] = -ball_speed[1]
+    # if player_rect.right >= width or player_rect.left <= 0: #відбивання м'яча від правої та лівої сторони ігрового поля зі зміною кольору
+    #     player.fill((GREEN))
+    #     player_speed[1] = -player_speed[1]
 
     pressed_key = pygame.key.get_pressed()
 
     main_surface.fill(BLACK)
 
-    main_surface.blit(ball, ball_rect)
+    main_surface.blit(player, player_rect)
 
     main_surface.blit(font.render(str(scores), True, WHITE), (width-30, 0)) # відмальовуємо рахунок гри
 
@@ -90,7 +90,7 @@ while is_working:
             enemies.pop(enemies.index(enemy))
     # print(len(enemies)) # перевіримо, чи дійсно працює логіка видалення ворогів зі списку
 
-        if ball_rect.colliderect(enemy[1]): # Видаляємо ворога при зустрічі з нашим героєм
+        if player_rect.colliderect(enemy[1]): # Видаляємо ворога при зустрічі з нашим героєм
             # enemies.pop(enemies.index(enemy))
             is_working = False
 
@@ -102,20 +102,20 @@ while is_working:
             bonuses.pop(bonuses.index(bonus))
             scores += 1
 
-        if ball_rect.colliderect(bonus[1]):
+        if player_rect.colliderect(bonus[1]):
             bonuses.pop(bonuses.index(bonus))
 
-    if pressed_key[K_DOWN] and not ball_rect.bottom >= height: #додаємо керування клавіши ВНИЗ
-        ball_rect = ball_rect.move(0, ball_speed)
+    if pressed_key[K_DOWN] and not player_rect.bottom >= height: #додаємо керування клавіши ВНИЗ
+        player_rect = player_rect.move(0, player_speed)
 
-    if pressed_key[K_UP] and not ball_rect.top <= 0: #додаємо керування клавіши ДОГОРИ
-        ball_rect = ball_rect.move(0, -ball_speed)
+    if pressed_key[K_UP] and not player_rect.top <= 0: #додаємо керування клавіши ДОГОРИ
+        player_rect = player_rect.move(0, -player_speed)
 
-    if pressed_key[K_RIGHT] and not ball_rect.right >= width: #додаємо керування клавіши ПРАВОРУЧ
-        ball_rect = ball_rect.move(ball_speed, 0)
+    if pressed_key[K_RIGHT] and not player_rect.right >= width: #додаємо керування клавіши ПРАВОРУЧ
+        player_rect = player_rect.move(player_speed, 0)
 
-    if pressed_key[K_LEFT] and not ball_rect.left <= 0: #додаємо керування клавіши ЛІВОРУЧ
-        ball_rect = ball_rect.move(-ball_speed, 0)
+    if pressed_key[K_LEFT] and not player_rect.left <= 0: #додаємо керування клавіши ЛІВОРУЧ
+        player_rect = player_rect.move(-player_speed, 0)
     
     # main_surface.fill((155,155,155))
     pygame.display.flip()
