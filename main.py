@@ -1,6 +1,7 @@
 import pygame
 from pygame.constants import QUIT, K_DOWN, K_UP, K_RIGHT, K_LEFT
 
+
 pygame.init()
 
 screen = width, height = 800, 600
@@ -17,6 +18,12 @@ ball = pygame.Surface((20, 20))
 ball.fill(WHITE)
 ball_rect = ball.get_rect() #координати положення ball - початкове(0,0)
 ball_speed = 1
+
+enemy = pygame.Surface((20, 20))
+enemy.fill(RED)
+enemy_rect = pygame.Rect(width, 100, *enemy.get_size())
+enemy_speed = 1
+
 
 is_working = True
 
@@ -40,6 +47,8 @@ while is_working:
     main_surface.fill(BLACK)
 
     main_surface.blit(ball, ball_rect)
+    main_surface.blit(enemy, enemy_rect)
+
 
     if pressed_key[K_DOWN]: #додаємо керування клавіши ВНИЗ
         ball_rect = ball_rect.move(0, ball_speed)
@@ -53,5 +62,6 @@ while is_working:
     if pressed_key[K_LEFT]: #додаємо керування клавіши ЛІВОРУЧ
         ball_rect = ball_rect.move(-ball_speed, 0)
     
+    enemy_rect = enemy_rect.move(-enemy_speed,0)
     # main_surface.fill((155,155,155))
     pygame.display.flip()
