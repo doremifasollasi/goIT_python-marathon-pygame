@@ -1,3 +1,5 @@
+import random
+
 import pygame
 from pygame.constants import QUIT, K_DOWN, K_UP, K_RIGHT, K_LEFT
 
@@ -11,7 +13,6 @@ WHITE = 255, 255, 255
 RED = 255, 0, 0
 GREEN = 0,255, 0
 
-
 main_surface = pygame.display.set_mode(screen)
 
 ball = pygame.Surface((20, 20))
@@ -22,12 +23,13 @@ ball_speed = 1
 def create_enemy():
     enemy = pygame.Surface((20, 20))
     enemy.fill(RED)
-    enemy_rect = pygame.Rect(width, 100, *enemy.get_size())
-    enemy_speed = 1
+    enemy_rect = pygame.Rect(width, random.randint(0, height), *enemy.get_size())
+    enemy_speed = random.randint(2, 3)
     return [enemy, enemy_rect, enemy_speed]
 
 CREATE_ENEMY = pygame.USEREVENT + 1
 pygame.time.set_timer(CREATE_ENEMY, 1500)
+
 
 enemies = []
 
