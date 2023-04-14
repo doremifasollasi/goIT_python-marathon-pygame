@@ -26,14 +26,24 @@ def create_enemy():
     enemy = pygame.Surface((20, 20))
     enemy.fill(RED)
     enemy_rect = pygame.Rect(width, random.randint(0, height), *enemy.get_size())
-    enemy_speed = random.randint(2, 3)
+    enemy_speed = random.randint(4, 6)
     return [enemy, enemy_rect, enemy_speed]
+
+def create_bonus(): # функція, яка створює бонуси зеленого кольору, які рухаються згори донизу
+    bonus = pygame.Surface((20, 20))
+    bonus.fill(GREEN)
+    bonus_rect = pygame.Rect(random.randint(0, width), 0, *bonus.get_size())
+    bonus_speed = random.randint(4, 6)
+    return [bonus, bonus_rect, bonus_speed]
 
 CREATE_ENEMY = pygame.USEREVENT + 1
 pygame.time.set_timer(CREATE_ENEMY, 1500)
 
+CREATE_BONUS = pygame.USEREVENT + 2
+pygame.time.set_timer(CREATE_BONUS, 2500)
 
 enemies = []
+bonuses = []
 
 is_working = True
 
@@ -47,7 +57,9 @@ while is_working:
 
         if event.type == CREATE_ENEMY:
             enemies.append(create_enemy()) # на кожній ітерації ми викликатимемо ф-ю create enemy(), яка створює нового ворога і додає його у список enemies
-
+        
+        if event.type == CREATE_BONUS:
+            bonuses.append(create_bonus())
     # ball_rect = ball_rect.move(ball_speed) перенесли в команду K_DOWN
     
     # if ball_rect.bottom >= height or ball_rect.top <= 0: #відбивання м'яча від верхньої та нижньої сторони ігрового поля зі зміною кольору
@@ -74,18 +86,24 @@ while is_working:
 
         if ball_rect.colliderect(enemy[1]): # Видаляємо ворога при зустрічі з нашим героєм
             enemies.pop(enemies.index(enemy))
-        
+
+    for bonus in bonuses:
+        bonus[1] = bonus[1].move(0, bonus[2])
+        main_surface.blit(bonus[0], bonus[1])   
+
+        if bonus[1].bottom >= height: # Проблема: кількість ворогів у списку буде постійно збільшуватись, що призведе до навантаження на пам'ять. Рішення: видалення. Реалізація: Якщо позиція нашого ворога більша за 0, то ми його видяляємо.
+            bonuses.pop(bonuses.index(bonus))
 
     if pressed_key[K_DOWN] and not ball_rect.bottom >= height: #додаємо керування клавіши ВНИЗ
         ball_rect = ball_rect.move(0, ball_speed)
 
-    if pressed_key[K_UP]: #додаємо керування клавіши ДОГОРИ
+    if pressed_key[K_UP] and not ball_rect.top <= 0: #додаємо керування клавіши ДОГОРИ
         ball_rect = ball_rect.move(0, -ball_speed)
 
-    if pressed_key[K_RIGHT]: #додаємо керування клавіши ПРАВОРУЧ
+    if pressed_key[K_RIGHT] and not ball_rect.right >= width: #додаємо керування клавіши ПРАВОРУЧ
         ball_rect = ball_rect.move(ball_speed, 0)
 
-    if pressed_key[K_LEFT]: #додаємо керування клавіши ЛІВОРУЧ
+    if pressed_key[K_LEFT] and not ball_rect.left <= 0: #додаємо керування клавіши ЛІВОРУЧ
         ball_rect = ball_rect.move(-ball_speed, 0)
     
     # main_surface.fill((155,155,155))
