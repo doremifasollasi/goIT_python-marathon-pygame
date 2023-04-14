@@ -26,6 +26,9 @@ def create_enemy():
     enemy_speed = 1
     return enemy, enemy_rect, enemy_speed
 
+CREATE_ENEMY = pygame.USEREVENT + 1
+pygame.time.set_timer(CREATE_ENEMY, 1500)
+
 enemies = []
 
 is_working = True
@@ -34,6 +37,9 @@ while is_working:
     for event in pygame.event.get():
         if event.type == QUIT:
             is_working = False  # pygame.quit()
+
+        if event.type == CREATE_ENEMY:
+            enemies.append(create_enemy()) # на кожній ітерації ми викликатимемо ф-ю create enemy(), яка створює нового ворога і додає його у список enemies
 
     # ball_rect = ball_rect.move(ball_speed) перенесли в команду K_DOWN
     
@@ -45,13 +51,15 @@ while is_working:
     #     ball.fill((GREEN))
     #     ball_speed[1] = -ball_speed[1]
 
-    enemies.append(create_enemy()) # на кожній ітерації ми викликатимемо ф-ю create enemy(), яка створює нового ворога і додає його у список enemies
     pressed_key = pygame.key.get_pressed()
 
     main_surface.fill(BLACK)
 
     main_surface.blit(ball, ball_rect)
-    main_surface.blit(enemy, enemy_rect)
+
+    for enemy in enemies:
+        enemy[1] = enemy[1].move(-enemy[2],0)
+        main_surface.blit(enemy[0], enemy[1])
 
 
     if pressed_key[K_DOWN]: #додаємо керування клавіши ВНИЗ
@@ -66,6 +74,5 @@ while is_working:
     if pressed_key[K_LEFT]: #додаємо керування клавіши ЛІВОРУЧ
         ball_rect = ball_rect.move(-ball_speed, 0)
     
-    enemy_rect = enemy_rect.move(-enemy_speed,0)
     # main_surface.fill((155,155,155))
     pygame.display.flip()
