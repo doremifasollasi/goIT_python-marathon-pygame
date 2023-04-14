@@ -7,6 +7,8 @@ screen = width, height = 800, 600
 
 BLACK = 0, 0, 0
 WHITE = 255, 255, 255
+RED = 255, 0, 0
+GREEN = 0,255, 0
 
 
 main_surface = pygame.display.set_mode(screen)
@@ -25,11 +27,11 @@ while is_working:
     ball_rect = ball_rect.move(ball_speed)
     
     if ball_rect.bottom >= height or ball_rect.top <= 0: #відбивання м'яча від верхньої та нижньої сторони ігрового поля зі зміною кольору
-        ball.fill((255, 0, 0))
+        ball.fill((RED))
         ball_speed[1] = -ball_speed[1]
     
     if ball_rect.right >= width or ball_rect.left <= 0: #відбивання м'яча від правої та лівої сторони ігрового поля зі зміною кольору
-        ball.fill((255, 0, 0))
+        ball.fill((GREEN))
         ball_speed[1] = -ball_speed[1]
 
     main_surface.fill(BLACK)
