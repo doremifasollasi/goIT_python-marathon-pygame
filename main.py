@@ -72,9 +72,11 @@ while is_working:
             enemies.pop(enemies.index(enemy))
     # print(len(enemies)) # перевіримо, чи дійсно працює логіка видалення ворогів зі списку
 
+        if ball_rect.colliderect(enemy[1]): # Видаляємо ворога при зустрічі з нашим героєм
+            enemies.pop(enemies.index(enemy))
         
 
-    if pressed_key[K_DOWN]: #додаємо керування клавіши ВНИЗ
+    if pressed_key[K_DOWN] and not ball_rect.bottom >= height: #додаємо керування клавіши ВНИЗ
         ball_rect = ball_rect.move(0, ball_speed)
 
     if pressed_key[K_UP]: #додаємо керування клавіши ДОГОРИ
