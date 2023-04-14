@@ -6,6 +6,8 @@ from pygame.constants import QUIT, K_DOWN, K_UP, K_RIGHT, K_LEFT
 
 pygame.init()
 
+FPS = pygame.time.Clock()
+
 screen = width, height = 800, 600
 
 BLACK = 0, 0, 0
@@ -36,6 +38,9 @@ enemies = []
 is_working = True
 
 while is_working:
+
+    FPS.tick(60)
+
     for event in pygame.event.get():
         if event.type == QUIT:
             is_working = False  # pygame.quit()
