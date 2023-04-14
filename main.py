@@ -20,7 +20,7 @@ main_surface = pygame.display.set_mode(screen)
 ball = pygame.Surface((20, 20))
 ball.fill(WHITE)
 ball_rect = ball.get_rect() #координати положення ball - початкове(0,0)
-ball_speed = 1
+ball_speed = 5
 
 def create_enemy():
     enemy = pygame.Surface((20, 20))
@@ -68,6 +68,10 @@ while is_working:
         enemy[1] = enemy[1].move(-enemy[2],0)
         main_surface.blit(enemy[0], enemy[1])
 
+        if enemy[1].left < 0: # Проблема: кількість ворогів у списку буде постійно збільшуватись, що призведе до навантаження на пам'ять. Рішення: видалення. Реалізація: Якщо позиція нашого ворога більша за 0, то ми його видяляємо.
+            enemies.pop(enemies.index(enemy))
+
+    # print(len(enemies)) # перевіримо, чи дійсно працює логіка видалення ворогів зі списку
 
     if pressed_key[K_DOWN]: #додаємо керування клавіши ВНИЗ
         ball_rect = ball_rect.move(0, ball_speed)
