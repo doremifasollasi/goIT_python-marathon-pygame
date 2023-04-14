@@ -24,7 +24,7 @@ def create_enemy():
     enemy.fill(RED)
     enemy_rect = pygame.Rect(width, 100, *enemy.get_size())
     enemy_speed = 1
-    return enemy, enemy_rect, enemy_speed
+    return [enemy, enemy_rect, enemy_speed]
 
 CREATE_ENEMY = pygame.USEREVENT + 1
 pygame.time.set_timer(CREATE_ENEMY, 1500)
