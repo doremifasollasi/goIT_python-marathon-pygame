@@ -19,11 +19,14 @@ ball.fill(WHITE)
 ball_rect = ball.get_rect() #координати положення ball - початкове(0,0)
 ball_speed = 1
 
-enemy = pygame.Surface((20, 20))
-enemy.fill(RED)
-enemy_rect = pygame.Rect(width, 100, *enemy.get_size())
-enemy_speed = 1
+def create_enemy():
+    enemy = pygame.Surface((20, 20))
+    enemy.fill(RED)
+    enemy_rect = pygame.Rect(width, 100, *enemy.get_size())
+    enemy_speed = 1
+    return enemy, enemy_rect, enemy_speed
 
+enemies = []
 
 is_working = True
 
@@ -42,6 +45,7 @@ while is_working:
     #     ball.fill((GREEN))
     #     ball_speed[1] = -ball_speed[1]
 
+    enemies.append(create_enemy()) # на кожній ітерації ми викликатимемо ф-ю create enemy(), яка створює нового ворога і додає його у список enemies
     pressed_key = pygame.key.get_pressed()
 
     main_surface.fill(BLACK)
