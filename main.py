@@ -28,6 +28,10 @@ while is_working:
         ball.fill((255, 0, 0))
         ball_speed[1] = -ball_speed[1]
     
+    if ball_rect.right >= width or ball_rect.left <= 0: #відбивання м'яча від правої та лівої сторони ігрового поля зі зміною кольору
+        ball.fill((255, 0, 0))
+        ball_speed[1] = -ball_speed[1]
+
     main_surface.fill(BLACK)
 
     main_surface.blit(ball, ball_rect)
