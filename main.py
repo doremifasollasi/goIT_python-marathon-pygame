@@ -19,8 +19,9 @@ font = pygame.font.SysFont('Verdana', 20)
 
 main_surface = pygame.display.set_mode(screen)
 
-player = pygame.Surface((20, 20))
-player.fill(WHITE)
+# player = pygame.Surface((20, 20))
+# player.fill(WHITE)
+player = pygame.image.load('player.png').convert_alpha()
 player_rect = player.get_rect() #координати положення player - початкове(0,0)
 player_speed = 5
 
@@ -37,6 +38,8 @@ def create_bonus(): # функція, яка створює бонуси зел�
     bonus_rect = pygame.Rect(random.randint(0, width), 0, *bonus.get_size())
     bonus_speed = random.randint(4, 6)
     return [bonus, bonus_rect, bonus_speed]
+
+bg = pygame.transform.scale(pygame.image.load('background.png').convert(), screen)
 
 CREATE_ENEMY = pygame.USEREVENT + 1
 pygame.time.set_timer(CREATE_ENEMY, 1500)
@@ -76,7 +79,8 @@ while is_working:
 
     pressed_key = pygame.key.get_pressed()
 
-    main_surface.fill(BLACK)
+    # main_surface.fill(WHITE)
+    main_surface.blit(bg, (0,0))
 
     main_surface.blit(player, player_rect)
 
