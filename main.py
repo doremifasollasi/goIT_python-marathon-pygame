@@ -21,9 +21,10 @@ main_surface = pygame.display.set_mode(screen)
 
 # player = pygame.Surface((20, 20))
 # player.fill(WHITE)
+# player_imgs = [pygame.image.load(file).convert_alpha() for file in]
 player = pygame.image.load('player.png').convert_alpha()
 player_rect = player.get_rect() #координати положення player - початкове(0,0)
-player_speed = 5
+player_speed = 10
 
 def create_enemy():
     enemy = pygame.Surface((20, 20))
@@ -40,6 +41,9 @@ def create_bonus(): # функція, яка створює бонуси зел�
     return [bonus, bonus_rect, bonus_speed]
 
 bg = pygame.transform.scale(pygame.image.load('background.png').convert(), screen)
+bgX = 0
+bgX2 = bg.get_width()
+bg_speed = 3
 
 CREATE_ENEMY = pygame.USEREVENT + 1
 pygame.time.set_timer(CREATE_ENEMY, 1500)
@@ -80,7 +84,19 @@ while is_working:
     pressed_key = pygame.key.get_pressed()
 
     # main_surface.fill(WHITE)
-    main_surface.blit(bg, (0,0))
+    # main_surface.blit(bg, (0,0))
+
+    bgX -= bg_speed
+    bgX2 -= bg_speed
+
+    if bgX < -bg.get_width():
+        bgX = bg.get_width
+
+    if bgX2 < -bg.get_width():
+        bgX2 = bg.get_width
+
+    main_surface.blit(bg, (bgX, 0))
+    main_surface.blit(bg, (bgX2, 0))
 
     main_surface.blit(player, player_rect)
 
